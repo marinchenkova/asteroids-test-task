@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95750097cd124595b69b4f9d80cba6c3, type: 3}
+  m_Name: EntityPrefab_WeaponShot_PlayerLaserShot
+  m_EditorClassIdentifier: 
+  _components:
+  - rid: 7110553870873395208
+  - rid: 7110553870873395209
+  - rid: 7110553870873395214
+  - rid: 7110553902983151616
+  - rid: 7110553902983151632
+  references:
+    version: 2
+    RefIds:
+    - rid: 7110553870873395208
+      type: {class: ViewBindingComponent, ns: Asteroids.Components, asm: Asteroids}
+      data:
+        _prefab: {fileID: 1961848881144662951, guid: 8b15a2036f412a845a9c61296e3436c8, type: 3}
+        _applyCustomScale: 0
+        _customScale: {x: 1, y: 1, z: 1}
+    - rid: 7110553870873395209
+      type: {class: SyncViewTransformComponent, ns: Asteroids.Components, asm: Asteroids}
+      data: 
+    - rid: 7110553870873395214
+      type: {class: DestroyTimerComponent, ns: Asteroids.Components, asm: Asteroids}
+      data:
+        _destroyTime: 0.1
+    - rid: 7110553902983151616
+      type: {class: CollisionComponent, ns: Asteroids.Components, asm: Asteroids}
+      data:
+        _maxHits: 64
+        _radius: 0.1
+        _includeLayers:
+          serializedVersion: 2
+          m_Bits: 256
+        _raycastDistanceSource: 0
+        _raycastDirectionSource: 1
+        _maxDistance: 100
+        _raycastDirection: {x: 0, y: 0, z: 0}
+        _destroyCollidedEntities: 1
+        _destroySelf: 0
+    - rid: 7110553902983151632
+      type: {class: PlayAudioClipComponent, ns: Asteroids.Components, asm: Asteroids}
+      data:
+        _audioClip: {fileID: 8300000, guid: 58e3100c93d16f64e9ffdbf8466e7ce7, type: 3}
+        _volume: 1
+        _useGameStateAudioSource: 1
+        _playMode: 0

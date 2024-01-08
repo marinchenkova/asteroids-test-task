@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95750097cd124595b69b4f9d80cba6c3, type: 3}
+  m_Name: EntityPrefab_Ufo
+  m_EditorClassIdentifier: 
+  _components:
+  - rid: 7110553902983151622
+  - rid: 7110553895403782148
+  - rid: 7110553870873395221
+  - rid: 7110553895403782145
+  - rid: 7110553902983151623
+  - rid: 7110553902983151624
+  - rid: 7110553902983151625
+  - rid: 7110553902983151626
+  - rid: 7110553902983151630
+  - rid: 7110553902983151639
+  references:
+    version: 2
+    RefIds:
+    - rid: 7110553870873395221
+      type: {class: BoundsTeleportComponent, ns: Asteroids.Components, asm: Asteroids}
+      data:
+        _xBound: {x: -10, y: 10}
+        _yBound: {x: -6, y: 6}
+    - rid: 7110553895403782145
+      type: {class: AddGameScoreOnDestroyComponent, ns: Asteroids.Components, asm: Asteroids}
+      data:
+        _score: 50
+    - rid: 7110553895403782148
+      type: {class: SyncViewTransformComponent, ns: Asteroids.Components, asm: Asteroids}
+      data: 
+    - rid: 7110553902983151622
+      type: {class: ViewBindingComponent, ns: Asteroids.Components, asm: Asteroids}
+      data:
+        _prefab: {fileID: 3793046245191929731, guid: fa284673039edce41802eae70d8e76a1, type: 3}
+        _applyCustomScale: 0
+        _customScale: {x: 1, y: 1, z: 1}
+    - rid: 7110553902983151623
+      type: {class: EntityFollowingComponent, ns: Asteroids.Components, asm: Asteroids}
+      data:
+        _speed: 3
+    - rid: 7110553902983151624
+      type: {class: SearchFollowTargetComponent, ns: Asteroids.Components, asm: Asteroids}
+      data:
+        _maxHits: 6
+        _radius: 100
+        _includeLayers:
+          serializedVersion: 2
+          m_Bits: 64
+    - rid: 7110553902983151625
+      type: {class: CollisionComponent, ns: Asteroids.Components, asm: Asteroids}
+      data:
+        _maxHits: 6
+        _radius: 0.2
+        _includeLayers:
+          serializedVersion: 2
+          m_Bits: 64
+        _raycastDistanceSource: 1
+        _raycastDirectionSource: 2
+        _maxDistance: 0
+        _raycastDirection: {x: 0, y: 0, z: 0}
+        _destroyCollidedEntities: 1
+        _destroySelf: 1
+    - rid: 7110553902983151626
+      type: {class: VelocityComponent, ns: Asteroids.Components, asm: Asteroids}
+      data:
+        _velocity: {x: 0, y: 0, z: 0}
+    - rid: 7110553902983151630
+      type: {class: PlayAudioClipComponent, ns: Asteroids.Components, asm: Asteroids}
+      data:
+        _audioClip: {fileID: 8300000, guid: 4820743d2c2506f4fb4740949fadb044, type: 3}
+        _volume: 1
+        _useGameStateAudioSource: 1
+        _playMode: 1
+    - rid: 7110553902983151639
+      type: {class: SpawnEntityOnDestroyComponent, ns: Asteroids.Components, asm: Asteroids}
+      data:
+        _spawnSettings:
+        - prefab: {fileID: 11400000, guid: d96c9225ed65363468b8d2aef3232df0, type: 2}
+          minAmount: 1
+          maxAmount: 1

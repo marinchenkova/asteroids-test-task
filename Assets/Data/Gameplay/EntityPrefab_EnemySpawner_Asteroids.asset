@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95750097cd124595b69b4f9d80cba6c3, type: 3}
+  m_Name: EntityPrefab_EnemySpawner_Asteroids
+  m_EditorClassIdentifier: 
+  _components:
+  - rid: 7110553895403782146
+  references:
+    version: 2
+    RefIds:
+    - rid: 7110553895403782146
+      type: {class: EnemySpawnerComponent, ns: Asteroids.Components, asm: Asteroids}
+      data:
+        _prefab: {fileID: 11400000, guid: d44150b3772c1a941baa68b457856a9e, type: 2}
+        _minSpawnAmount: 0
+        _maxSpawnAmount: 4
+        _initialSpawnPeriod: 4
+        _minSpawnPeriod: 1
+        _spawnPeriodIncrement: -0.1
+        _randomizeRotation: 1
+        _spawnAtStartAmount: 4
+        _xBound: {x: -10, y: 10}
+        _yBound: {x: -6, y: 6}

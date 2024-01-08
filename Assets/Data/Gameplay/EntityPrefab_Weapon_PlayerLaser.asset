@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95750097cd124595b69b4f9d80cba6c3, type: 3}
+  m_Name: EntityPrefab_Weapon_PlayerLaser
+  m_EditorClassIdentifier: 
+  _components:
+  - rid: 7110553902983151617
+  - rid: 7110553870873395204
+  - rid: 7110553870873395206
+  - rid: 7110553870873395212
+  - rid: 7110553870873395213
+  references:
+    version: 2
+    RefIds:
+    - rid: 7110553870873395204
+      type: {class: WeaponComponent, ns: Asteroids.Components, asm: Asteroids}
+      data:
+        _bulletPrefab: {fileID: 11400000, guid: 5f52427843dabe64a9753d38b10f3922, type: 2}
+        _bulletsPerShot: 1
+        _bulletPositionOffset: {x: 0, y: 0.2, z: 0}
+        _bulletRotationOffset: {x: 0, y: 0, z: 0}
+        _bulletSpeed: 0
+        _parentBullets: 1
+    - rid: 7110553870873395206
+      type: {class: WeaponCooldownComponent, ns: Asteroids.Components, asm: Asteroids}
+      data:
+        _cooldown: 1
+    - rid: 7110553870873395212
+      type: {class: WeaponAmmoComponent, ns: Asteroids.Components, asm: Asteroids}
+      data:
+        _initialAmmoCount: 3
+        _maxAmmoCount: 3
+    - rid: 7110553870873395213
+      type: {class: WeaponAmmoLoaderComponent, ns: Asteroids.Components, asm: Asteroids}
+      data:
+        _loadAmount: 1
+        _loadTime: 3
+    - rid: 7110553902983151617
+      type: {class: TransformComponent, ns: Asteroids.Components, asm: Asteroids}
+      data:
+        _position: {x: 0, y: 0, z: 0}
+        _rotation: {x: 0, y: 0, z: 0}
