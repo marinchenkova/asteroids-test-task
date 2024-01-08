@@ -64,21 +64,100 @@ experimental версии Unity пакетов, физику Unity для пер
 
 ### Архитектура проекта
 
-В качестве базы для построения игровой логики используется архитектура Entity + Components, реализованная в виде пакета [Entities](https://github.com/marinchenkova/asteroids-test-task/tree/master/Assets/Scripts/Entities): 
+В качестве базы для построения игровой логики используется архитектура Entity + Components, реализованная в виде пакета [Assets/Scripts/Entities](https://github.com/marinchenkova/asteroids-test-task/tree/master/Assets/Scripts/Entities) 
 
-- Сущность `Entity` представляет собой readonly-структуру указатель на список прикрепленных к ней компонентов-классов, которые реализуют интерфейс `IEntityComponent`
-- Компоненты хранятся в созданном мире сущностей `World`
-- Компоненты принимают сигналы при прикреплении/откреплении от сущности, при ее уничтожении
+- Сущность `Entity` представляет собой readonly-структуру, указатель на список прикрепленных к ней компонентов-классов
+
+```csharp
+public readonly struct Entity : IEquatable<Entity> {
+
+    public readonly World world;
+
+    private readonly long _id;
+
+    // ...
+}
+```
+
+- Компоненты должны быть классами и реализовать интерфейс `IEntityComponent`
+- Компоненты принимают сигналы при прикреплении/откреплении, уничтожении сущности для запуска логики 
+
+```csharp
+public interface IEntityComponent {
+
+    void OnAttach(Entity entity) {}
+
+    void OnDetach(Entity entity) {}
+
+    void OnDestroy(Entity entity) {}
+}
+```
+
+- Сущности и компоненты хранятся в созданном мире `World`
+- При создании мира в конструктор класса `World` в виде интерфейсов передаются ссылки на сервисы, такие как источник апдейтов, хранилище сущностей, хранилище и фабрика компонентов и т.п. 
 - Компоненты через взаимодействие с миром могут подписываться на вызовы Update, создавать вью, добавлять и удалять другие компоненты и сущности
 
-Для создания сущностей с набором компонентов из редактора был добавлен класс `EntityPrefab : ScriptableObject`, а также реализован простой инспектор для выбора нужного компонента.
-Компоненты в префабе хранятся в виде базового интерфейса `IEntityComponent` с помощью атрибута `[SerializeReference]`. 
+```csharp
+public sealed class World {
+
+    public World(
+        IEntityIdProvider entityIdProvider,
+        IEntityStorage entityStorage,
+        IEntityComponentStorage entityComponentStorage,
+        IEntityComponentFactory entityComponentFactory,
+        IEntityViewProvider entityViewProvider,
+        ITickSource tickSource
+    ) {
+        _entityIdProvider = entityIdProvider;
+        _entityStorage = entityStorage;
+        _entityComponentStorage = entityComponentStorage;
+        _entityComponentFactory = entityComponentFactory;
+        _entityViewProvider = entityViewProvider;
+        _tickSource = tickSource;
+    }
+
+    // ...
+}
+```
+
+```csharp
+public static class EntityExtensions {
+
+    public static T GetComponent<T>(this Entity entity) where T : class, IEntityComponent {
+        return entity.world?.GetComponent<T>(entity);
+    }
+
+    public static void SetComponent<T>(this Entity entity, T component) where T : class, IEntityComponent {
+        entity.world?.SetComponent<T>(entity, component);
+    }
+
+    public static void RemoveComponent<T>(this Entity entity) where T : class, IEntityComponent {
+        entity.world?.RemoveComponent<T>(entity);
+    }
+
+    // ...
+}
+```
+
+- Для создания сущностей с набором компонентов из редактора был добавлен ScriptableObject класс `EntityPrefab` 
+- Компоненты в префабе хранятся с помощью атрибута `[SerializeReference]`, для их редактирования реализован простой инспектор с браузером компонентов
+
+```csharp
+public sealed class EntityPrefab : ScriptableObject {
+
+    [SerializeReference] private IEntityComponent[] _components;
+
+    // ...
+}
+```
 
 <img width="655" alt="image" src="https://github.com/marinchenkova/asteroids-test-task/assets/22106355/c4e345c6-c803-46b7-b6f9-52bd9a02458c">
 
-Для клонирования компонентов, указанных в префабе, используется `UnityEngine.JsonUtility`, с помощью которого создается новый экземпляр компонента с нужными данными.
-Данный метод порождает много мусора в виде json-строк, однако в рамках данного тестового задания было принято решение не тратить много времени на некоторые частные аспекты, 
-так как глобальная задача по построению архитектуры более важна.
+Для клонирования компонентов, указанных в префабе, используется `UnityEngine.JsonUtility`. Новый экземпляр компонента с нужными данными воссоздается из json-строки компонента в префабе.
+Такой подход приводит к образованию мусора в виде json-строк, однако в рамках данного тестового задания было принято решение не тратить много времени на некоторые частные аспекты,
+так как техническое задание не предполагает дальнейшего расширения кодовой базы или ее использования в условиях с высокой нагрузкой на ресурсы. 
+
+- Создание вью для сущностей производится через `World`, который вызывает сервис для создания сущностей, использующий пул 
 
 > В проекте не реализованы сервисы для сохранения состояния игры между сессиями. В качестве заглушки используется ScriptableObject, в котором хранится информация о последней сессии.
 
